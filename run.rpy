@@ -8,6 +8,14 @@ dryRun = True
 
 # If True, don't print any messages from this script
 quiet = False
+# If True, convert the files one at a time.
+# If False, do them all in one go.
+# Converting them one at a time is slower, but you'll
+# be able to see the progress as it runs, and files
+# will appear in the output directory one at a time
+# instead of all in one go.
+oneAtATime = True
+
 # Version of KCC docker image to use.
 # Note that this probably won't be up to date, since
 # KCC currently has some issues with the docker build
@@ -54,13 +62,36 @@ for ext in fileExtensions:
 
 # If there's at least one file to convert, then...
 if len(filesToConvert) > 0:
+
+	if not oneAtATime:
+
+		# Start by appending the input files to the end of the docker command
 		for f in filesToConvert:
+			cmd.append(f'/{str(f)}')
+
+		if not quiet:
+			print(f"Running: {cmd}")
+
+		# Then run the command. Or not, if dryRun is True
+		if not dryRun:
+			process = Popen(cmd, stdout=PIPE)
+			output, error = process.communicate()
+
+	for f in filesToConvert:
+
+		if oneAtATime:
+
+			cmd.append(['--output', outputDirectory])
 			cmd.append(f'/{str(f)}')
 
 			if not quiet:
 				print(f"Running: {cmd}")
+
 			# Then run the command. Or not, if dryRun is True
 			if not dryRun:
 				process = Popen(cmd, stdout=PIPE)
 				output, error = process.communicate()
+
+			cmd.pop()
+			cmd.pop()
 			cmd.pop()
