@@ -41,6 +41,16 @@ inputDirectory = "input"
 # Directory to move the converted files to.
 # Can be absolute or relative.
 outputDirectory = "output"
+
+# Directory to move input files into if the conversion
+# fails.
+# Can be absolute or relative.
+# Can be set to an empty string if you don't want to
+# move the problem files.
+# Moving the files to a failed directory is useful if
+# this script is automated, so that problem files aren't
+# kept in the input directory and re-processed.
+failedDirectory = "failed"
 # Types of files to convert
 fileExtensions = ["cbz", "zip"]
 
@@ -143,5 +153,11 @@ if len(filesToConvert) > 0:
 			# to flag the failure.
 			if not quiet:
 				print(f"epub does not exist {str(inEpub)}")
+
+			if len(failedDirectory) > 0:
+				failedFile = PurePosixPath(failedDirectory + "/" + str(f.parts[-1]))
+				failedFile = Path(failedFile)
+				if not dryRun:
+					f.rename(failedFile)
 		if breakAfterFirst:
 			break
