@@ -6,6 +6,8 @@ from subprocess import Popen, PIPE
 # If True, don't actually convert or delete any files
 dryRun = True
 
+# If True, don't print any messages from this script
+quiet = False
 # Version of KCC docker image to use.
 # Note that this probably won't be up to date, since
 # KCC currently has some issues with the docker build
@@ -54,6 +56,9 @@ for ext in fileExtensions:
 if len(filesToConvert) > 0:
 		for f in filesToConvert:
 			cmd.append(f'/{str(f)}')
+
+			if not quiet:
+				print(f"Running: {cmd}")
 			# Then run the command. Or not, if dryRun is True
 			if not dryRun:
 				process = Popen(cmd, stdout=PIPE)
