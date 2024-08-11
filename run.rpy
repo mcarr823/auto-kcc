@@ -8,6 +8,11 @@ dryRun = True
 
 # If True, don't print any messages from this script
 quiet = False
+
+# For testing purposes only.
+# Only converts the first file, then aborts afterwards.
+breakAfterFirst = False
+
 # If True, convert the files one at a time.
 # If False, do them all in one go.
 # Converting them one at a time is slower, but you'll
@@ -95,3 +100,6 @@ if len(filesToConvert) > 0:
 			cmd.pop()
 			cmd.pop()
 			cmd.pop()
+
+		if breakAfterFirst:
+			break
