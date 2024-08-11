@@ -2,7 +2,6 @@
 
 from pathlib import Path, PurePosixPath
 from subprocess import Popen, PIPE
-from re import sub
 from os import environ
 
 # If True, don't actually convert or delete any files
@@ -213,11 +212,8 @@ if len(filesToConvert) > 0:
 		inEpub = PurePosixPath(outputDirectory)
 		outEpub = PurePosixPath(outputDirectory)
 
-		# Remove any sequences of non-alphanumeric chars and replace them
-		# with a single underscore.
-		# eg. "test (20)" would become "test_20_"
-		# This is to match the way KCC renames files.
-		filename = sub('([^\\w])+', '_', f.stem)
+		# Filename minus the extension
+		filename = f.stem
 
 		inEpub = inEpub.joinpath(f"{filename}.kepub.epub")
 		outEpub = outEpub.joinpath(f"{filename}.epub") # Removed .kepub while moving
