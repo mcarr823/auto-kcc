@@ -82,6 +82,81 @@ def getNumber(key):
 
 def getString(key):
 	return environ[key] if key in environ else ""
+
+# Type of target device
+# See https://github.com/ciromattia/kcc?tab=readme-ov-file#profiles
+profile = getString('PROFILE')
+if len(profile) > 0:
+	cmd.extend(['--profile', profile])
+
+# Other KCC arguments
+# See https://github.com/ciromattia/kcc?tab=readme-ov-file#standalone-kcc-c2epy-usage
+if getBool('MANGA'):
+	cmd.extend('--manga-style')
+
+if getBool('HQ'):
+	cmd.extend('--hq')
+
+if getBool('TWOPANEL'):
+	cmd.extend('--two-panel')
+
+if getBool('WEBTOON'):
+	cmd.extend('--webtoon')
+
+if getBool('NOPROCESSING'):
+	cmd.extend('--noprocessing')
+
+if getBool('UPSCALE'):
+	cmd.extend('--upscale')
+
+if getBool('STRETCH'):
+	cmd.extend('--stretch')
+
+if getBool('BLACKBORDERS'):
+	cmd.extend('--blackborders')
+
+if getBool('WHITEBORDERS'):
+	cmd.extend('--whiteborders')
+
+if getBool('FORCECOLOR'):
+	cmd.extend('--forcecolor')
+
+if getBool('FORCEPNG'):
+	cmd.extend('--forcepng')
+
+if getBool('MOZJPEG'):
+	cmd.extend('--mozjpeg')
+
+if getBool('MAXIMIZESTRIPS'):
+	cmd.extend('--maximizestrips')
+
+if getBool('DELETE'):
+	cmd.extend('--delete')
+
+targetsize = getNumber('TARGETSIZE')
+if targetsize >= 0:
+	cmd.extend(['--ts', targetsize])
+
+splitter = getNumber('SPLITTER')
+if splitter >= 0:
+	cmd.extend(['-r', splitter])
+
+gamma: = getNumber('GAMMA:')
+if gamma >= 0:
+	cmd.extend(['--gamma', gamma])
+
+cropping = getNumber('CROPPING')
+if cropping >= 0:
+	cmd.extend(['--cropping', cropping])
+
+croppingpower = getNumber('CROPPINGPOWER')
+if croppingpower >= 0:
+	cmd.extend(['--croppingpower', croppingpower])
+
+croppingminimum = getNumber('CROPPINGMINIMUM')
+if croppingminimum >= 0:
+	cmd.extend(['--croppingminimum', croppingminimum])
+
 # Convert input and output directories to paths
 inputPath = Path(inputDirectory)
 outputPath = Path(outputDirectory)
