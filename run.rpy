@@ -3,6 +3,7 @@
 from pathlib import Path, PurePosixPath
 from subprocess import Popen, PIPE
 from re import sub
+from os import environ
 
 # If True, don't actually convert or delete any files
 dryRun = True
@@ -73,6 +74,14 @@ cmd = [
  f'ghcr.io/ciromattia/kcc:{kccVersion}'
 ]
 
+def getBool(key):
+	return key in environ and environ[key] == 'true'
+
+def getNumber(key):
+	return int(environ[key]) if key in environ else -1
+
+def getString(key):
+	return environ[key] if key in environ else ""
 # Convert input and output directories to paths
 inputPath = Path(inputDirectory)
 outputPath = Path(outputDirectory)
