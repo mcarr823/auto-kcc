@@ -70,8 +70,8 @@ cmd = [
  '-v', f'./{kindlegenDirectory}:/app',
  '-v', f'./{inputDirectory}:/input',
  '-v', f"./{outputDirectory}:/output",
- '--output', "/output",
- f'ghcr.io/ciromattia/kcc:{kccVersion}'
+ f'ghcr.io/ciromattia/kcc:{kccVersion}',
+ '--output', "/output"
 ]
 
 def getBool(key):
