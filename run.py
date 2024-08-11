@@ -92,46 +92,46 @@ if len(profile) > 0:
 # Other KCC arguments
 # See https://github.com/ciromattia/kcc?tab=readme-ov-file#standalone-kcc-c2epy-usage
 if getBool('MANGA'):
-	cmd.extend('--manga-style')
+	cmd.extend(['--manga-style'])
 
 if getBool('HQ'):
-	cmd.extend('--hq')
+	cmd.extend(['--hq'])
 
 if getBool('TWOPANEL'):
-	cmd.extend('--two-panel')
+	cmd.extend(['--two-panel'])
 
 if getBool('WEBTOON'):
-	cmd.extend('--webtoon')
+	cmd.extend(['--webtoon'])
 
 if getBool('NOPROCESSING'):
-	cmd.extend('--noprocessing')
+	cmd.extend(['--noprocessing'])
 
 if getBool('UPSCALE'):
-	cmd.extend('--upscale')
+	cmd.extend(['--upscale'])
 
 if getBool('STRETCH'):
-	cmd.extend('--stretch')
+	cmd.extend(['--stretch'])
 
 if getBool('BLACKBORDERS'):
-	cmd.extend('--blackborders')
+	cmd.extend(['--blackborders'])
 
 if getBool('WHITEBORDERS'):
-	cmd.extend('--whiteborders')
+	cmd.extend(['--whiteborders'])
 
 if getBool('FORCECOLOR'):
-	cmd.extend('--forcecolor')
+	cmd.extend(['--forcecolor'])
 
 if getBool('FORCEPNG'):
-	cmd.extend('--forcepng')
+	cmd.extend(['--forcepng'])
 
 if getBool('MOZJPEG'):
-	cmd.extend('--mozjpeg')
+	cmd.extend(['--mozjpeg'])
 
 if getBool('MAXIMIZESTRIPS'):
-	cmd.extend('--maximizestrips')
+	cmd.extend(['--maximizestrips'])
 
 if getBool('DELETE'):
-	cmd.extend('--delete')
+	cmd.extend(['--delete'])
 
 targetsize = getNumber('TARGETSIZE')
 if targetsize >= 0:
