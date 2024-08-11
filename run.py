@@ -141,7 +141,7 @@ splitter = getNumber('SPLITTER')
 if splitter >= 0:
 	cmd.extend(['-r', splitter])
 
-gamma: = getNumber('GAMMA:')
+gamma = getNumber('GAMMA:')
 if gamma >= 0:
 	cmd.extend(['--gamma', gamma])
 
