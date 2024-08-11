@@ -67,10 +67,10 @@ cmd = [
  'docker',
  'run',
  '--rm',
- '-v',
- f'./{kindlegenDirectory}:/app',
- '-v',
- f'./{inputDirectory}:/input',
+ '-v', f'./{kindlegenDirectory}:/app',
+ '-v', f'./{inputDirectory}:/input',
+ '-v', f"./{outputDirectory}:/output",
+ '--output', "/output",
  f'ghcr.io/ciromattia/kcc:{kccVersion}'
 ]
 
@@ -195,7 +195,6 @@ if len(filesToConvert) > 0:
 
 		if oneAtATime:
 
-			cmd.append(['--output', outputDirectory])
 			cmd.append(f'/{str(f)}')
 
 			if not quiet:
@@ -207,17 +206,12 @@ if len(filesToConvert) > 0:
 				output, error = process.communicate()
 
 			cmd.pop()
-			cmd.pop()
-			cmd.pop()
 
 		# For each of the converted files, figure out the file paths of the
 		# converted .epub (`inEpub`) and the target filepath (`outEpub`)
 		# should be.
-		# There's probably a better way to do this...
-		inEpub = PurePosixPath(inputDirectory)
+		inEpub = PurePosixPath(outputDirectory)
 		outEpub = PurePosixPath(outputDirectory)
-		for d in f.parts[1:-1]:
-			inEpub = inEpub.joinpath(d)
 
 		# Remove any sequences of non-alphanumeric chars and replace them
 		# with a single underscore.
