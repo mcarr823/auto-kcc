@@ -224,7 +224,7 @@ if len(filesToConvert) > 0:
 			# If inEpub exists, then the conversion was successful
 
 			if not quiet:
-				print("epub exists")
+				print(f"Success: {filename}")
 
 			# Move the .epub file from inputDir to outputDir
 			inEpub.rename(outEpub)
@@ -234,12 +234,13 @@ if len(filesToConvert) > 0:
 			# Report the error, or move the input file, or do some other thing
 			# to flag the failure.
 			if not quiet:
-				print(f"epub does not exist {str(inEpub)}")
+				print(f"Failure: {filename}")
 
 			if len(failedDirectory) > 0:
 				failedFile = PurePosixPath(failedDirectory + "/" + str(f.parts[-1]))
 				failedFile = Path(failedFile)
 				if not dryRun:
 					f.rename(failedFile)
+
 		if breakAfterFirst:
 			break
