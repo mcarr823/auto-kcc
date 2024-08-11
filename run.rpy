@@ -51,6 +51,13 @@ outputDirectory = "output"
 # this script is automated, so that problem files aren't
 # kept in the input directory and re-processed.
 failedDirectory = "failed"
+
+# Directory containing the kindlegen binary file.
+# The kindlegen binary is usually optional.
+# If you aren't using one, just create an empty directory
+# and assign that.
+kindlegenDirectory = "binary"
+
 # Types of files to convert
 fileExtensions = ["cbz", "zip"]
 
@@ -60,6 +67,7 @@ cmd = [
  'run',
  '--rm',
  '-v',
+ f'./{kindlegenDirectory}:/app',
  '-v',
  f'./{inputDirectory}:/input',
  f'ghcr.io/ciromattia/kcc:{kccVersion}'
