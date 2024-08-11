@@ -21,7 +21,7 @@ breakAfterFirst = False
 # be able to see the progress as it runs, and files
 # will appear in the output directory one at a time
 # instead of all in one go.
-oneAtATime = True
+oneAtATime = False
 
 # Version of KCC docker image to use.
 # Note that this probably won't be up to date, since
