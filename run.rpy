@@ -2,6 +2,7 @@
 
 from pathlib import Path, PurePosixPath
 from subprocess import Popen, PIPE
+from re import sub
 
 # If True, don't actually convert or delete any files
 dryRun = True
@@ -37,6 +38,9 @@ kccVersion = "5.6.5"
 # file paths.
 inputDirectory = "input"
 
+# Directory to move the converted files to.
+# Can be absolute or relative.
+outputDirectory = "output"
 # Types of files to convert
 fileExtensions = ["cbz", "zip"]
 
@@ -50,7 +54,10 @@ cmd = [
  f'./{inputDirectory}:/input',
  f'ghcr.io/ciromattia/kcc:{kccVersion}'
 ]
+
+# Convert input and output directories to paths
 inputPath = Path(inputDirectory)
+outputPath = Path(outputDirectory)
 
 # List containing any detected files of the right type
 filesToConvert = []
@@ -101,5 +108,40 @@ if len(filesToConvert) > 0:
 			cmd.pop()
 			cmd.pop()
 
+		# For each of the converted files, figure out the file paths of the
+		# converted .epub (`inEpub`) and the target filepath (`outEpub`)
+		# should be.
+		# There's probably a better way to do this...
+		inEpub = PurePosixPath(inputDirectory)
+		outEpub = PurePosixPath(outputDirectory)
+		for d in f.parts[1:-1]:
+			inEpub = inEpub.joinpath(d)
+
+		# Remove any sequences of non-alphanumeric chars and replace them
+		# with a single underscore.
+		# eg. "test (20)" would become "test_20_"
+		# This is to match the way KCC renames files.
+		filename = sub('([^\\w])+', '_', f.stem)
+
+		inEpub = inEpub.joinpath(f"{filename}.kepub.epub")
+		outEpub = outEpub.joinpath(f"{filename}.epub") # Removed .kepub while moving
+		inEpub = Path(inEpub)
+		outEpub = Path(outEpub)
+
+		if inEpub.exists():
+			# If inEpub exists, then the conversion was successful
+
+			if not quiet:
+				print("epub exists")
+
+			# Move the .epub file from inputDir to outputDir
+			inEpub.rename(outEpub)
+
+		else:
+			# If inEpub doesn't exist, then the conversion must have failed.
+			# Report the error, or move the input file, or do some other thing
+			# to flag the failure.
+			if not quiet:
+				print(f"epub does not exist {str(inEpub)}")
 		if breakAfterFirst:
 			break
