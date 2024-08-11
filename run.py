@@ -6,7 +6,7 @@ from re import sub
 from os import environ
 
 # If True, don't actually convert or delete any files
-dryRun = True
+dryRun = False
 
 # If True, don't print any messages from this script
 quiet = False
