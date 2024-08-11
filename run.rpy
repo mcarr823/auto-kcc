@@ -3,6 +3,9 @@
 from pathlib import Path, PurePosixPath
 from subprocess import Popen, PIPE
 
+# If True, don't actually convert or delete any files
+dryRun = True
+
 # Version of KCC docker image to use.
 # Note that this probably won't be up to date, since
 # KCC currently has some issues with the docker build
@@ -51,6 +54,8 @@ for ext in fileExtensions:
 if len(filesToConvert) > 0:
 		for f in filesToConvert:
 			cmd.append(f'/{str(f)}')
-			process = Popen(cmd, stdout=PIPE)
-			output, error = process.communicate()
+			# Then run the command. Or not, if dryRun is True
+			if not dryRun:
+				process = Popen(cmd, stdout=PIPE)
+				output, error = process.communicate()
 			cmd.pop()
