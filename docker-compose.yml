@@ -1,0 +1,14 @@
+services:
+  kcc:
+    image: ghcr.io/mcarr823/kcc-watch-dir:amd64
+    #image: ghcr.io/mcarr823/kcc-watch-dir:arm64
+    volumes:
+      #- ./kindlegen:/app/kindlegen:ro
+      - ./input:/input
+      - ./output:/output
+      - ./failed:/failed
+    environment:
+      STRETCH: 'true'
+      UPSCALE: 'true'
+      #DELETE: 'true'
+      PROFILE: 'KoL'

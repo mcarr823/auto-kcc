@@ -83,3 +83,9 @@ See the [KCC documentation](https://github.com/ciromattia/kcc?tab=readme-ov-file
 | GAMMA           | float   | --gamma           |
 | CROPPINGPOWER   | float   | --croppingpower   |
 | CROPPINGMINIMUM | float   | --croppingminimum |
+
+## Docker compose
+
+An example docker-compose.yml file has been provided in this repo.
+
+It provides the required volumes and defines a few environment variables.
