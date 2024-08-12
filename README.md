@@ -25,6 +25,10 @@ It can also take a fourth volume which points to the kindlegen binary, which is 
 | /failed           | YES | Directory into which comics which couldn't be converted will be moved |
 | /app/kindlegen:ro | NO  | kindlegen binary file |
 
+For example:
+
+`docker run --rm -v ./input:/input -v ./output:/output -v ./failed:/failed ghcr.io/mcarr823/kcc-watch-dir:amd64`
+
 ## Profile
 
 This program takes several optional arguments.
@@ -89,3 +93,34 @@ See the [KCC documentation](https://github.com/ciromattia/kcc?tab=readme-ov-file
 An example docker-compose.yml file has been provided in this repo.
 
 It provides the required volumes and defines a few environment variables.
+
+## Run automatically
+
+This program works by scanning an input directory, processing files, then moving them to a different directory afterwards.
+
+Since the input files get moved after running, it's safe to automate this process.
+
+You are free to automate this in any fashion you want, but I would recommend writing a bash script and using crontab.
+
+For example, let's say your docker-compose.yml file and your docker volumes are setup in `/home/user/containers/kcc`
+
+You could write a bash script (run.sh) of:
+
+```
+#!/bin/bash
+
+cd /home/user/containers/kcc
+docker compose up
+docker compose rm -f
+```
+
+And make it executable with `chmod +x run.sh`
+
+That script would cd into the directory where the compose file and volumes are stored, run the program, then remove the image afterwards.
+
+You could then set it up in crontab by running `crontab -e` and setting it up like so:
+
+`0 1 * * * /home/user/containers/kcc/run.sh > /home/user/containers/kcc/log.txt`
+
+That would run the program at 1AM every night and log any output to a log.txt file.
+
