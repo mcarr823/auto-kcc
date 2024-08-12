@@ -4,15 +4,24 @@ from pathlib import Path, PurePosixPath
 from subprocess import Popen, PIPE
 from os import environ
 
+def getBool(key):
+	return key in environ and environ[key] == 'true'
+
+def getNumber(key):
+	return int(environ[key]) if key in environ else -1
+
+def getString(key):
+	return environ[key] if key in environ else ""
+
 # If True, don't actually convert or delete any files
-dryRun = False
+dryRun = getBool('DRYRUN')
 
 # If True, don't print any messages from this script
-quiet = False
+quiet = getBool('QUIET')
 
 # For testing purposes only.
 # Only converts the first file, then aborts afterwards.
-breakAfterFirst = False
+breakAfterFirst = getBool('TEST')
 
 # If True, convert the files one at a time.
 # If False, do them all in one go.
@@ -73,14 +82,6 @@ cmd = [
  '--output', "/output"
 ]
 
-def getBool(key):
-	return key in environ and environ[key] == 'true'
-
-def getNumber(key):
-	return int(environ[key]) if key in environ else -1
-
-def getString(key):
-	return environ[key] if key in environ else ""
 
 # Type of target device
 # See https://github.com/ciromattia/kcc?tab=readme-ov-file#profiles
