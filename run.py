@@ -224,19 +224,13 @@ if len(filesToConvert) > 0:
 
 			cmd.pop()
 
-		# For each of the converted files, figure out the file paths of the
-		# converted .epub (`inEpub`) and the target filepath (`outEpub`)
-		# should be.
-		inEpub = PurePosixPath(outputDirectory)
-		outEpub = PurePosixPath(outputDirectory)
-
 		# Filename minus the extension
 		filename = f.stem
 
-		inEpub = inEpub.joinpath(f"{filename}.kepub.epub")
-		outEpub = outEpub.joinpath(f"{filename}.epub") # Removed .kepub while moving
-		inEpub = Path(inEpub)
-		outEpub = Path(outEpub)
+		# For each of the converted files, figure out the file paths of the
+		# converted .epub (`inEpub`) and the target filepath (`outEpub`)
+		# should be.
+		inEpub = Path(f"{outputDirectory}/{filename}.kepub.epub")
 
 		if inEpub.exists():
 			# If inEpub exists, then the conversion was successful
@@ -244,7 +238,13 @@ if len(filesToConvert) > 0:
 			if not quiet:
 				print(f"Success: {filename}")
 
-			# Move the .epub file from inputDir to outputDir
+			# Change the .kepub.epub extension to just plain .kepub
+			# This is to stop both ebook management software (eg. Calibra)
+			# and Kobo devices themselves from mistaking the KEPUB file
+			# for a plain old EPUB file.
+			# This is mostly important for ensuring that the comic isn't
+			# converted twice.
+			outEpub = Path(f"{outputDirectory}/{filename}.kepub")
 			inEpub.rename(outEpub)
 
 		else:
