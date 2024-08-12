@@ -5,6 +5,13 @@ Auto KCC is a docker image which aims to make [KCC (Kindle Comic Converter)](htt
 
 It checks an input directory for any comic book archives, processes them based on the environment arguments supplied, then moves the results into the output directory.
 
+## Architectures
+
+x86_64 and ARM64 are both supported, with corresponding tags.
+
+- kcc-watch-dir:amd64
+- kcc-watch-dir:arm64
+
 ## Volumes
 
 This program requires three volumes to be defined: input, output, and failed.
