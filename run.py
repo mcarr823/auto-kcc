@@ -23,14 +23,6 @@ quiet = getBool('QUIET')
 # Only converts the first file, then aborts afterwards.
 breakAfterFirst = getBool('TEST')
 
-# If True, convert the files one at a time.
-# If False, do them all in one go.
-# Converting them one at a time is slower, but you'll
-# be able to see the progress as it runs, and files
-# will appear in the output directory one at a time
-# instead of all in one go.
-oneAtATime = False
-
 # Types of files to convert
 fileExtensions = ["cbz", "zip"]
 
@@ -159,11 +151,11 @@ if len(filesToConvert) == 0:
 
 else:
 
-	if not oneAtATime:
+	for f in filesToConvert:
 
-		# Start by appending the input files to the end of the docker command
-		for f in filesToConvert:
-			cmd.append(f'/{str(f)}')
+		# Update the bash command by appending this file's name
+		# to the end
+		cmd.append(f'/{str(f)}')
 
 		if not quiet:
 			print(f"Running: {cmd}")
@@ -173,21 +165,10 @@ else:
 			process = Popen(cmd, stdout=PIPE)
 			output, error = process.communicate()
 
-	for f in filesToConvert:
-
-		if oneAtATime:
-
-			cmd.append(f'/{str(f)}')
-
-			if not quiet:
-				print(f"Running: {cmd}")
-
-			# Then run the command. Or not, if dryRun is True
-			if not dryRun:
-				process = Popen(cmd, stdout=PIPE)
-				output, error = process.communicate()
-
-			cmd.pop()
+		# Remove this file's name from the end of the bash command
+		# now that we've already converted this file.
+		# That way we can reuse the command for the next loop iteration.
+		cmd.pop()
 
 		# Filename minus the extension
 		filename = f.stem
