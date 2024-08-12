@@ -83,14 +83,20 @@ cmd = [
 ]
 
 
-# Type of target device
-# See https://github.com/ciromattia/kcc?tab=readme-ov-file#profiles
+# KCC arguments
+# See https://github.com/ciromattia/kcc?tab=readme-ov-file#standalone-kcc-c2epy-usage
 profile = getString('PROFILE')
 if len(profile) > 0:
 	cmd.extend(['--profile', profile])
 
-# Other KCC arguments
-# See https://github.com/ciromattia/kcc?tab=readme-ov-file#standalone-kcc-c2epy-usage
+title = getString('TITLE')
+if len(title) > 0:
+	cmd.extend(['--title', title])
+
+fmt = getString('FORMAT')
+if len(fmt) > 0:
+	cmd.extend(['--format', fmt])
+
 if getBool('MANGA'):
 	cmd.extend(['--manga-style'])
 
@@ -160,6 +166,17 @@ if croppingminimum >= 0:
 # Convert input and output directories to paths
 inputPath = Path(inputDirectory)
 outputPath = Path(outputDirectory)
+batchsplit = getNumber('BATCHSPLIT')
+if batchsplit >= 0:
+	cmd.extend(['--batchsplit', batchsplit])
+
+customwidth = getNumber('CUSTOMWIDTH')
+if customwidth >= 0:
+	cmd.extend(['--customwidth', customwidth])
+
+customheight = getNumber('CUSTOMHEIGHT')
+if customheight >= 0:
+	cmd.extend(['--customheight', customheight])
 
 # List containing any detected files of the right type
 filesToConvert = []
