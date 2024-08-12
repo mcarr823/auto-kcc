@@ -141,11 +141,11 @@ if getBool('DELETE'):
 
 targetsize = getNumber('TARGETSIZE')
 if targetsize >= 0:
-	cmd.extend(['--ts', targetsize])
+	cmd.extend(['--targetsize', targetsize])
 
 splitter = getNumber('SPLITTER')
 if splitter >= 0:
-	cmd.extend(['-r', splitter])
+	cmd.extend(['--splitter', splitter])
 
 gamma = getNumber('GAMMA')
 if gamma >= 0:
