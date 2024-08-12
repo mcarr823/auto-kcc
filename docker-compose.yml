@@ -1,7 +1,7 @@
 services:
   kcc:
-    image: ghcr.io/mcarr823/kcc-watch-dir:amd64
-    #image: ghcr.io/mcarr823/kcc-watch-dir:arm64
+    image: ghcr.io/mcarr823/auto-kcc:amd64
+    #image: ghcr.io/mcarr823/auto-kcc:arm64
     volumes:
       #- ./kindlegen:/app/kindlegen:ro
       - ./input:/input

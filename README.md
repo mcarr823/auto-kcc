@@ -11,8 +11,8 @@ It checks an input directory for any comic book archives, processes them based o
 
 x86_64 and ARM64 are both supported, with corresponding tags.
 
-- kcc-watch-dir:amd64
-- kcc-watch-dir:arm64
+- auto-kcc:amd64
+- auto-kcc:arm64
 
 ## Volumes
 
@@ -29,7 +29,7 @@ It can also take a fourth volume which points to the kindlegen binary, which is 
 
 For example:
 
-`docker run --rm -v ./input:/input -v ./output:/output -v ./failed:/failed ghcr.io/mcarr823/kcc-watch-dir:amd64`
+`docker run --rm -v ./input:/input -v ./output:/output -v ./failed:/failed ghcr.io/mcarr823/auto-kcc:amd64`
 
 ## Profile
 
