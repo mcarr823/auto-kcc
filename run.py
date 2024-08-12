@@ -31,55 +31,16 @@ breakAfterFirst = getBool('TEST')
 # instead of all in one go.
 oneAtATime = False
 
-# Version of KCC docker image to use.
-# Note that this probably won't be up to date, since
-# KCC currently has some issues with the docker build
-# process which require manual intervention to build
-# properly. So the "latest" tag currently breaks regularly.
-kccVersion = "5.6.5"
-
-# Directory containing the files to be converted.
-# Must currently be a relative directory with a single
-# directory in the path.
-# eg. "input" is valid, but "/home/user/input" and
-# "input/src" are not.
-# TODO: add support for multiple directories and absolute
-# file paths.
-inputDirectory = "input"
-
-# Directory to move the converted files to.
-# Can be absolute or relative.
-outputDirectory = "output"
-
-# Directory to move input files into if the conversion
-# fails.
-# Can be absolute or relative.
-# Can be set to an empty string if you don't want to
-# move the problem files.
-# Moving the files to a failed directory is useful if
-# this script is automated, so that problem files aren't
-# kept in the input directory and re-processed.
-failedDirectory = "failed"
-
-# Directory containing the kindlegen binary file.
-# The kindlegen binary is usually optional.
-# If you aren't using one, just create an empty directory
-# and assign that.
-kindlegenDirectory = "binary"
-
 # Types of files to convert
 fileExtensions = ["cbz", "zip"]
 
+# Directory into which the exported files should go
+outputDirectory = "/output"
+
 # Docker command to run in order to convert the comics
 cmd = [
- 'docker',
- 'run',
- '--rm',
- '-v', f'./{kindlegenDirectory}:/app',
- '-v', f'./{inputDirectory}:/input',
- '-v', f"./{outputDirectory}:/output",
- f'ghcr.io/ciromattia/kcc:{kccVersion}',
- '--output', "/output"
+ 'python3', '/opt/kcc/kcc-c2e.py',
+ '--output', outputDirectory
 ]
 
 
@@ -163,9 +124,6 @@ croppingminimum = getNumber('CROPPINGMINIMUM')
 if croppingminimum >= 0:
 	cmd.extend(['--croppingminimum', croppingminimum])
 
-# Convert input and output directories to paths
-inputPath = Path(inputDirectory)
-outputPath = Path(outputDirectory)
 batchsplit = getNumber('BATCHSPLIT')
 if batchsplit >= 0:
 	cmd.extend(['--batchsplit', batchsplit])
@@ -178,6 +136,8 @@ customheight = getNumber('CUSTOMHEIGHT')
 if customheight >= 0:
 	cmd.extend(['--customheight', customheight])
 
+# Convert input and failed directories to paths
+inputPath = Path("/input")
 failedDir = Path("/failed")
 
 # List containing any detected files of the right type
