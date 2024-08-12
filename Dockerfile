@@ -11,6 +11,9 @@ FROM python:3.11-slim-bullseye
 RUN apt update
 RUN apt install -y git python3-dev python3-pip libpng-dev libjpeg-dev p7zip-full python3-pyqt5
 
+# Needed to build mozjpeg-lossless-optimization on ARM64
+RUN apt install -y cmake
+
 # Grab the actual application and put it in /opt
 # Specifically grab the latest version by its tag, because we want
 # the latest release, not a dev version.
