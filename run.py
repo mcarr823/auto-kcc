@@ -192,9 +192,12 @@ for ext in fileExtensions:
 		# Append the file to the list of files to convert
 		filesToConvert.append(path)
 
+if len(filesToConvert) == 0:
+	if not quiet:
+		print("No input files found - Aborting")
+	exit()
 
-# If there's at least one file to convert, then...
-if len(filesToConvert) > 0:
+else:
 
 	if not oneAtATime:
 
