@@ -151,7 +151,16 @@ if len(filesToConvert) == 0:
 
 else:
 
+	# Keep track of current file number for logging purposes
+	iteration = 0
+	total = len(filesToConvert)
+
 	for f in filesToConvert:
+
+		iteration += 1
+
+		if not quiet:
+			print(f"File {iteration} of {total}")
 
 		# Update the bash command by appending this file's name
 		# to the end
@@ -203,4 +212,7 @@ else:
 				f.rename(failedDir)
 
 		if breakAfterFirst:
+			print("Test flag turned on - Breaking after the first loop iteration")
 			break
+
+	print("Program has finished")
