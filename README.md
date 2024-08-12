@@ -1,5 +1,7 @@
 # Auto KCC
 
+[![Docker Image amd64](https://github.com/mcarr823/auto-kcc/actions/workflows/docker-amd64.yml/badge.svg)](https://github.com/mcarr823/auto-kcc/actions/workflows/docker-amd64.yml)
+[![Docker Image arm64](https://github.com/mcarr823/auto-kcc/actions/workflows/docker-aarch64.yml/badge.svg)](https://github.com/mcarr823/auto-kcc/actions/workflows/docker-aarch64.yml)
 
 Auto KCC is a docker image which aims to make [KCC (Kindle Comic Converter)](https://github.com/ciromattia/kcc) easier to use in a headless environment.
 
