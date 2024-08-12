@@ -178,6 +178,8 @@ customheight = getNumber('CUSTOMHEIGHT')
 if customheight >= 0:
 	cmd.extend(['--customheight', customheight])
 
+failedDir = Path("/failed")
+
 # List containing any detected files of the right type
 filesToConvert = []
 
@@ -249,16 +251,12 @@ if len(filesToConvert) > 0:
 
 		else:
 			# If inEpub doesn't exist, then the conversion must have failed.
-			# Report the error, or move the input file, or do some other thing
-			# to flag the failure.
+			# Report the error and move the input file to flag the failure.
 			if not quiet:
 				print(f"Failure: {filename}")
 
-			if len(failedDirectory) > 0:
-				failedFile = PurePosixPath(failedDirectory + "/" + str(f.parts[-1]))
-				failedFile = Path(failedFile)
-				if not dryRun:
-					f.rename(failedFile)
+			if not dryRun:
+				f.rename(failedDir)
 
 		if breakAfterFirst:
 			break
